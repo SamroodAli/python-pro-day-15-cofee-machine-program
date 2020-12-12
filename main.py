@@ -1,8 +1,8 @@
-# Todo: 1: Prompt user by asking “What would you like? (espresso/latte/cappuccino):”
-# Todo: 2: Turn off the Coffee Machine by entering “off” to the prompt.
-# Todo: 3: Print Report
-# Todo: 4: Check resources sufficient?
-# Todo: 5: Process coins
-# Todo: 6: Check transaction successful?
+# Todo: 1: Import resources, screen clear
+# Todo: 2: def coffee_machine => while on loop
+# Todo: 3: check resources and show available options
+# Todo: 4: get user choice
+# Todo: 5: is off => return
+# Todo: 6: is not off => def money
 # Todo: 7: Make Coffee.
 # Todo: 8: Add resources
