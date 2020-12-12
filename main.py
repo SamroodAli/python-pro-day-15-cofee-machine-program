@@ -59,31 +59,28 @@ def make_coffee(coffee_type, menu_data,current_resouces):
 
 
 def coffee_machine(menu_data, current_resources):
-    available_options = coffee_options_checker(menu_data, current_resources)
-    if available_options:
-        user_option = ''
-        while user_option not in available_options:
-            print("Which coffee would you like ?")
-            for coffee_type in available_options:
-                print(coffee_type, end=" ")
-            user_option = input()
-            if user_option in available_options:
-                current_resources["money"] += money(menu_data, user_option)
-            else:
-                print("Invalid choice")
-        current_resources = make_coffee(user_option, menu_data, current_resources)
-    else:
-        print("Sorry, we are out of resources")
+    on = True
+    while on:
+        available_options = coffee_options_checker(menu_data, current_resources)
+        if available_options:
+            user_option = ""
+            while user_option not in available_options and user_option != 'off':
+                print("Which coffee would you like ?")
+                for coffee_type in available_options:
+                    print(coffee_type, end=" ")
+                user_option = input().lower()
+                if user_option in available_options:
+                    current_resources["money"] += money(menu_data, user_option)
+                elif user_option == 'off':
+                    on = False
+                    return
+                else:
+                    print("Invalid choice")
+            current_resources = make_coffee(user_option, menu_data, current_resources)
+
+        else:
+            on = False
+            print("Sorry, we are out of resources")
     return
-
-
-# Todo: 3: check resources and show available options
-# Todo: 4: get user choice
-# Todo: 5: is off => return
-
-# Todo: 6: is not off => def money
-# Todo: 7: Make Coffee.
-# Todo: 8: Add resources
-
 
 coffee_machine(MENU, resources)
