@@ -18,13 +18,13 @@ def coffee_options_checker(menu_data, current_resources):
 # Todo: 2: def coffee_machine => while on loop
 def coffee_machine(menu_data, current_resources):
     available_options = coffee_options_checker(menu_data, current_resources)
-    no_of_available_options = len(available_options)
-    if no_of_available_options > 1:
+    if available_options:
         print("Which coffee would you like ?")
         for coffee_type in available_options:
             print(coffee_type, end=" ")
         user_choice = input()
-
+    else:
+        print("Sorry, we are out of resources")
     return
 
 
