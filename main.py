@@ -50,8 +50,14 @@ def money(menu_data,coffee_type):
         else:
             return cost
 
+def make_coffee(coffee_type, menu_data,current_resouces):
+    print(f"Here is your {coffee_type}, thank you for shopping, visit again.")
+    ingredients = menu_data[coffee_type]["ingredients"]
+    for ingredient in ingredients:
+        current_resouces[ingredient] -= ingredients[ingredient]
+    return current_resouces
 
-# Todo: 2: def coffee_machine => while on loop
+
 def coffee_machine(menu_data, current_resources):
     available_options = coffee_options_checker(menu_data, current_resources)
     if available_options:
@@ -60,12 +66,12 @@ def coffee_machine(menu_data, current_resources):
             print("Which coffee would you like ?")
             for coffee_type in available_options:
                 print(coffee_type, end=" ")
-            user_choice = input()
-            if user_choice in available_options:
-                current_resources["money"] += money(menu_data, user_choice)
+            user_option = input()
+            if user_option in available_options:
+                current_resources["money"] += money(menu_data, user_option)
             else:
                 print("Invalid choice")
-        current_resources = make_coffee(menu_data,current_resources)
+        current_resources = make_coffee(user_option, menu_data, current_resources)
     else:
         print("Sorry, we are out of resources")
     return
