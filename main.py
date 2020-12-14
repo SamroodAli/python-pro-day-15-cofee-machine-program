@@ -1,6 +1,12 @@
-# Todo: 1: Import resources, screen clear
 from data import MENU, resources
 from logo import LOGO
+
+
+def add_resources(current_resources):
+    for resource in current_resources:
+        qty = input(f"Please specify the quantity of {resource} to add : ")
+        current_resources[resource] += int(qty) if qty != "" else 0
+    return current_resources
 
 
 def coffee_options_checker(menu_data, current_resources):
@@ -21,21 +27,17 @@ def money(menu_data, coffee_type):
     cost = menu_data[coffee_type]["cost"]
     print(f"That will be ${cost}")
     while total != cost:
-        penny = 0.01
-        nickel = 0.05
-        dime = 0.1
-        quarter = 0.25
-        penny_user_input = input("How many pennies ?: ")
-        penny_input = int(penny_user_input) if penny_user_input != '' else 0
-        nickel_user_input = input("How many pennies ?: ")
-        nickel_input = int(nickel_user_input) if nickel_user_input != '' else 0
-        dime_user_input = input("How many pennies ?: ")
-        dime_input = int(dime_user_input) if dime_user_input != '' else 0
-        quarter_user_input = input("How many pennies ?: ")
-        quarter_input = int(quarter_user_input) if quarter_user_input != '' else 0
-
-        total += round(
-            (penny_input * penny) + (nickel_input * nickel) + (dime_input * dime) + (quarter_input * quarter), 2)
+        currency = {
+            "pennies": 0.01,
+            "nickels": 0.05,
+            "dimes": 0.1,
+            "quarters": 0.25,
+        }
+        for coin in currency:
+            user_input = input(f"How many {coin} ?: ")
+            user_input = int(user_input) if user_input != '' else 0
+            total += (currency[coin]*user_input)
+        total = round(total,2)
         if total > cost:
             change = total - cost
             total = cost
@@ -47,35 +49,40 @@ def money(menu_data, coffee_type):
             return cost
 
 
-def make_coffee(coffee_type, menu_data, current_resouces):
-    print(LOGO)
-    print(f"Here is your {coffee_type}, thank you for shopping, visit again.")
+def make_coffee(coffee_type, menu_data, current_resources):
+    print(f"Here is your {coffee_type}, thank you for shopping, visit again.\n")
     ingredients = menu_data[coffee_type]["ingredients"]
     for ingredient in ingredients:
-        current_resouces[ingredient] -= ingredients[ingredient]
-    return current_resouces
+        current_resources[ingredient] -= ingredients[ingredient]
+    return current_resources
 
 
 def coffee_machine(menu_data, current_resources):
     on = True
     while on:
+        print(LOGO)
         available_options = coffee_options_checker(menu_data, current_resources)
         if available_options:
             user_option = ""
-            while user_option not in available_options and user_option != 'off':
+            while user_option not in available_options and user_option not in ["add", "report", "off"]:
                 print("Which coffee would you like ?")
                 for coffee_type in available_options:
                     print(coffee_type, end=" ")
                 user_option = input().lower()
                 if user_option in available_options:
                     current_resources["money"] += money(menu_data, user_option)
+                    current_resources = make_coffee(user_option, menu_data, current_resources)
                 elif user_option == 'off':
                     on = False
                     return
+                elif user_option == "report":
+                    print("Current resources report :")
+                    for resource in current_resources:
+                        print(resource, current_resources[resource])
+                elif user_option == "add":
+                    current_resources = add_resources(current_resources)
                 else:
                     print("Invalid choice")
-            current_resources = make_coffee(user_option, menu_data, current_resources)
-
         else:
             on = False
             print("Sorry, we are out of resources")
