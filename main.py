@@ -1,6 +1,6 @@
 # Todo: 1: Import resources, screen clear
 from data import MENU, resources
-
+from logo import LOGO
 
 def coffee_options_checker(menu_data, current_resources):
     list_options = []
@@ -45,12 +45,14 @@ def money(menu_data,coffee_type):
             change = total - cost
             total = cost
             print(f"here is the balance: ${round(change, 2)}")
+            return cost
         elif total < cost:
             print(f"not enough, you are still missing ${cost-total}")
         else:
             return cost
 
 def make_coffee(coffee_type, menu_data,current_resouces):
+    print(LOGO)
     print(f"Here is your {coffee_type}, thank you for shopping, visit again.")
     ingredients = menu_data[coffee_type]["ingredients"]
     for ingredient in ingredients:
