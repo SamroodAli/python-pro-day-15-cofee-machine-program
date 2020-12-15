@@ -58,8 +58,8 @@ def make_coffee(coffee_type, menu_data, current_resources):
 
 
 def coffee_machine(menu_data, current_resources):
-    on = True
-    while on:
+    is_on = True
+    while is_on:
         print(LOGO)
         available_options = coffee_options_checker(menu_data, current_resources)
         if available_options:
@@ -73,18 +73,20 @@ def coffee_machine(menu_data, current_resources):
                     current_resources["money"] += money(menu_data, user_option)
                     current_resources = make_coffee(user_option, menu_data, current_resources)
                 elif user_option == 'off':
-                    on = False
+                    is_on = False
                     return
                 elif user_option == "report":
                     print("Current resources report :")
-                    for resource in current_resources:
-                        print(resource, current_resources[resource])
+                    print(f"Water : {current_resources['water']}ml")
+                    print(f"Milk : {current_resources['milk']}ml")
+                    print(f"Coffee : {current_resources['coffee']}g")
+                    print(f"Money : ${current_resources['money']}")
                 elif user_option == "add":
                     current_resources = add_resources(current_resources)
                 else:
                     print("Invalid choice")
         else:
-            on = False
+            is_on = False
             print("Sorry, we are out of resources")
     return
 
