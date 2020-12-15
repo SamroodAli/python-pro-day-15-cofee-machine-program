@@ -3,6 +3,7 @@ from logo import LOGO
 
 
 def add_resources(current_resources):
+    """"function to add resouces to current resources"""
     for resource in current_resources:
         qty = input(f"Please specify the quantity of {resource} to add : ")
         current_resources[resource] += int(qty) if qty != "" else 0
@@ -10,6 +11,7 @@ def add_resources(current_resources):
 
 
 def coffee_options_checker(menu_data, current_resources):
+    """returns the list of coffee options available with current resources"""
     list_options = []
     for coffee_type in menu_data:
         sufficient = True
@@ -23,6 +25,7 @@ def coffee_options_checker(menu_data, current_resources):
 
 
 def money(menu_data, coffee_type):
+    """function to handle money transactions and returns the revenue"""
     total = 0
     cost = menu_data[coffee_type]["cost"]
     print(f"That will be ${cost}")
@@ -49,7 +52,19 @@ def money(menu_data, coffee_type):
             return cost
 
 
+def reporter(current_resources):
+    """prints current resources"""
+    print("Current resources report :")
+    print(f"Water : {current_resources['water']}ml")
+    print(f"Milk :  {current_resources['milk']}ml")
+    print(f"Coffee : {current_resources['coffee']}g")
+    print(f"Money : ${current_resources['money']}")
+
+
 def make_coffee(coffee_type, menu_data, current_resources):
+    """function to make coffee, takes menu order and deducts needed
+     resources from current resources, and prints coffee"""
+
     print(f"Here is your {coffee_type}, thank you for shopping, visit again.\n")
     ingredients = menu_data[coffee_type]["ingredients"]
     for ingredient in ingredients:
@@ -76,11 +91,7 @@ def coffee_machine(menu_data, current_resources):
                     is_on = False
                     return
                 elif user_option == "report":
-                    print("Current resources report :")
-                    print(f"Water : {current_resources['water']}ml")
-                    print(f"Milk : {current_resources['milk']}ml")
-                    print(f"Coffee : {current_resources['coffee']}g")
-                    print(f"Money : ${current_resources['money']}")
+                    reporter(current_resources)
                 elif user_option == "add":
                     current_resources = add_resources(current_resources)
                 else:
